@@ -1,0 +1,107 @@
+
+
+    
+
+        <div class="row">
+        	<div class="col-lg-12 text-center">
+                <h2>Ajustado A Ti.</h2>
+                <p>Plataforma de B&uacute;squeda de servicios en tiempo real. </p>
+                <hr>
+            </div>
+            
+
+        <div class="home_container">
+        <div class="form_home_container">
+        <center>
+        <form name="newRegistroForm" role="form">
+            
+                    
+                    <div  class="form-group col-lg-12">
+                    <label for="input1">Nombre</label>
+                        <input type="text"
+                               ng-model="consulta.usuario.nombre"
+                               name="direccion"
+                               placeholder=""/>
+                    </div>
+                    <div  class="form-group col-lg-12">
+                    <label for="input1">Email</label>
+                        <input type="text"
+                               ng-model="consulta.usuario.email"
+                               name="email"
+                               placeholder=""/>
+                    </div>
+                    <div  class="form-group col-lg-12">
+                    <label for="input1">Twitter</label>
+                        <input type="text"
+                               ng-model="consulta.usuario.twitter"
+                               name="email"
+                               placeholder="@ajustadoati"/>
+                    </div>
+                    <div  class="form-group col-lg-12">
+                    <label for="input1">Telefono</label>
+                        <input type="text"
+                               ng-model="consulta.usuario.telefono"
+                               name="email"
+                               placeholder="04127781781"/>
+                    </div>
+                    <h5>Datos de B&uacute;squeda</h5>
+                    <hr>
+                     <div class="form-group col-lg-12">
+                     <select ng-model="categoriaSelected" requerido ng-options="categoria.nombre for categoria in cat">
+                      <option value="">-- Seleccione Categor&iacute;a --</option>
+                    </select>
+                        
+                    </div>
+                   
+                
+                     <div class="form-group col-lg-12">
+                        <label for="input1">Producto</label>
+                         
+                              <textarea  ng-model="consulta.producto.nombre"
+                               name="producto"></textarea>
+                    </div>
+                   
+             <div class="form-group col-lg-12">
+                        
+                        
+                         <input type="submit"
+                       class="btn btn-primary"
+                       ng-click="createConsulta(newRegistroForm);"
+                       value='Buscar'/>
+                       
+                    </div>
+                
+        </form>
+        </center>
+        </div>
+
+
+       <div class="home_map_container" >
+            <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options" control="map.control">
+                <ui-gmap-markers models="map.markers" coords="'self'" options="'options'" isLabel='true' click="onClick()">
+                
+                </ui-gmap-markers>
+            </ui-gmap-google-map>
+            
+        </div>  
+        <div class="home_controls">
+            
+            <h3>Direcci&oacute;n</h3>
+            <p>
+                <input type="text" placeholder="Address. i.e: Concha Espina 1, Madrid" ng-model="address" style="width: 210px"/>
+                <button ng-click="addAddress()">Buscar!</button>    
+            </p>
+            
+        </div>
+</div>
+
+</div>
+
+	
+             
+        
+        <!-- /.row -->
+    <!-- /.container -->
+
+
+	

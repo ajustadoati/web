@@ -1,0 +1,138 @@
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Registro
+                <small>Queremos saber los servicios que brinda para ayudarle!</small>
+            </h1>
+            
+        </div>
+
+        <div class="registro_container">
+        <div class="form_registro_container">
+        <center>
+        <form role="form" 
+            name="formRegistro">
+                <div class="row">
+                    <div class="form-group col-lg-12">
+                        <label for="input1">Nombre</label>
+                        <input type="text" 
+                                name="nombre" 
+                                ng-model="proveedor.usuario.nombre" 
+                                class="form-control" 
+                                id="input1" 
+                                required>
+                    <span class="messages" 
+                        ng-show="formRegistro.nombre.$submitted || formRegistro.nombre.$touched">
+                        <span ng-show="formRegistro.producto.$error.required">El nombre es obligatorio.</span>
+                    </span>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label for="input2">Email</label>
+                        <input type="email" 
+                            name="email" 
+                            ng-model="proveedor.usuario.email" 
+                            class="form-control" 
+                            id="input2" required>
+                        <span class="messages" 
+                            ng-show="formRegistro.nombre.$submitted || formRegistro.nombre.$touched">
+                            <span ng-show="formRegistro.email.$error.required">El email es obligatorio.</span>
+                        </span>
+                    </div>      
+                    <div class="form-group col-lg-12">
+                        <label for="input3">Tel&eacute;fono</label>
+                        <input type="phone" 
+                            name="telefono" 
+                            ng-model="proveedor.usuario.telefono" 
+                            class="form-control" 
+                            id="input3" 
+                            required>
+                        <span class="messages" 
+                            ng-show="formRegistro.telefono.$submitted || formRegistro.telefono.$touched">
+                            <span ng-show="formRegistro.telefono.$error.required">El tel&eacute;fono es obligatorio.</span>
+                        </span>
+                    </div>
+                     <div class="form-group col-lg-6">
+                        <label for="input3">Usuario</label>
+                        <input type="phone" 
+                            name="usuario" 
+                            ng-model="proveedor.usuario.user" 
+                            class="form-control" 
+                            id="input3" 
+                            required>
+                        <span class="messages" 
+                            ng-show="formRegistro.usuario.$submitted || formRegistro.usuario.$touched">
+                            <span ng-show="formRegistro.usuario.$error.required">El usuario es obligatorio.</span>
+                        </span>
+                    </div>
+                     <div class="form-group col-lg-6">
+                        <label for="input3">Password</label>
+                        <input type="password" 
+                            name="password" 
+                            ng-model="proveedor.usuario.password" 
+                            class="form-control" 
+                            id="input3" 
+                            required>
+                        <span class="messages" 
+                            ng-show="formRegistro.password.$submitted || formRegistro.password.$touched">
+                            <span ng-show="formRegistro.password.$error.required">El password es obligatorio.</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-lg-12">
+                    <hr/>
+                    <h3>Categorias</h3>
+                    <div ng-repeat="categoria in cat">
+                        <label>
+                            <input type="checkbox" 
+                                name="selectedCategorias[]" 
+                                value="{{categoria.nombre}}" 
+                                ng-model="categoria.selected" 
+                                required/>
+                                <span>{{categoria.nombre}}</span>
+                        </label>
+                    </div>           
+                </div>
+                <div class="form-group col-lg-12">
+                        <input type="hidden" 
+                            name="save" 
+                            value="contact">
+                        
+                         <input type="submit"
+                               class="btn btn-primary"
+                               ng-click="createProveedor(formRegistro);"
+                               value='Guardar' 
+                               ng-disabled="formRegistro.nombre.$untouched || formRegistro.nombre.$pristine || formRegistro.email.$untouched || formRegistro.email.$pristine || formRegistro.telefono.$untouched || formRegistro.telefono.$pristine || formRegistro.usuario.$untouched || formRegistro.usuario.$pristine || formRegistro.password.$untouched || formRegistro.password.$pristine"//>
+                </div>
+            </form>
+        </center>
+        </div>
+
+
+       <div class="registro_map_container" >
+            <ui-gmap-google-map center="map.center" 
+                zoom="map.zoom" 
+                draggable="true" 
+                options="map.options" 
+                control="map.control">
+                <ui-gmap-markers models="map.markers" 
+                    coords="'coords'" 
+                    options="'options'" 
+                    isLabel='true' 
+                    onclick="alert()">
+                </ui-gmap-markers>
+            </ui-gmap-google-map>
+        </div>  
+        <div class="registro_controls">
+            <h3>Direcci&oacute;n</h3>
+            <p>
+                <input type="text" 
+                    class="form-control" 
+                    placeholder="Address. i.e: Concha Espina 1, Madrid" 
+                    ng-model="address" 
+                    style="width: 210px"/>
+                <button class="btn btn-primary" 
+                    ng-click="addAddress()">Buscar!</button>    
+        </div>
+</div>
+
+   
+

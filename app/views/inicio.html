@@ -1,0 +1,95 @@
+<div class="row">
+        	<div class="col-lg-12 text-center">
+                <h2>Ajustado A Ti.</h2>
+                <p>Plataforma de B&uacute;squeda de servicios en tiempo real. </p>
+              
+          </div>
+        <div ng-controller="ModalCtrl">
+          <div class="col-md-6 col-md-offset-3">
+            <form name="formConsulta">
+              <div class="form-group">
+                 <input type="producto" 
+                    name="producto" 
+                    ng-model="consulta.producto.nombre" 
+                    placeholder="Producto o Servicio"  
+                    class="form-control" 
+                    id="producto" 
+                    required >
+                 <span class="messages" 
+                 ng-show="formConsulta.producto.$submitted || formConsulta.producto.$touched">
+                    <span ng-show="formConsulta.producto.$error.required">El producto es obligatorio.</span>
+                  </span>
+                 </div>
+                  <div class="form-group">
+                        <select ng-model="categoriaSelected" 
+                          name="categoria"  
+                          required 
+                          ng-options="categoria.nombre for categoria in cat" 
+                          class="selectpicker form-control" 
+                          ng-change="changedValue(categoriaSelected)">
+                          <option value="">-- Seleccione Categor&iacute;a --</option>
+                        </select>
+                        <span class="messages" 
+                          ng-show="formConsulta.categoria.$submitted || formConsulta.categoria.$touched">
+                          <span ng-show="formConsulta.producto.$error.required">Categor&iacute;a obligatoria.</span>
+                        </span>
+                  </div>    
+                  <div class="form-group col-md-offset-5">
+                      <input type="submit"
+                       class="btn btn-primary"
+                       ng-click="open(formConsulta)"
+                       value='Buscar'
+                       ng-disabled="formConsulta.producto.$untouched || formConsulta.categoria.$pristine"/>
+                       
+                  </div>
+            </form>
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Realizando B&uacute;squeda!</h3>
+        </div>
+        <div class="modal-body">
+
+            <ui-gmap-google-map 
+                    center="map.center" 
+                    zoom="map.zoom" 
+                    draggable="true" 
+                    options="map.options" 
+                    events="map.events" 
+                    control="map.control">
+       
+              <ui-gmap-window 
+                coords="MapOptions.markers.selected.coords" 
+                show="windowOptions.show" 
+                templateUrl="'infowindow.tpl'" 
+                templateParameter="MapOptions.markers.selected"  
+                options="windowOptions" 
+                closeClick="closeClick()" 
+                ng-cloak>
+                    <div>Hello</div>
+              </ui-gmap-window>
+              <ui-gmap-markers 
+                models="map.markers" 
+                idkey="map.markers.id" 
+                coords="'coords'" 
+                click="onClick" 
+                events="map.markers.events">
+                
+              </ui-gmap-markers>
+        </ui-gmap-google-map>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+</div>
+</div>
+</div>
+
+	
+             
+
+	
