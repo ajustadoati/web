@@ -21,6 +21,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
   $routeProvider.when('/session', {templateUrl: 'views/chat.html', controller: 'ChatCtrl'});
   $routeProvider.when('/', {templateUrl: 'views/inicio.html', controller: 'InicioCtrl'});
   $routeProvider.when('/registro', {templateUrl: 'views/registro.html', controller: 'RegistroCtrl'});
+  $routeProvider.when('/comofunciona', {templateUrl: 'views/comofunciona.html', controller: 'ComoFuncionaCtrl'});
   $routeProvider.when('/map', {templateUrl: 'views/map.html', controller: 'MapCtrl'});
   $routeProvider.otherwise({redirectTo: '/view1'});
 }])

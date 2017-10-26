@@ -20,6 +20,12 @@ angular.module('myApp.controllers', [])
 
 
   }])
+   .controller('ComoFuncionaCtrl', ['$scope','$websocket', function($scope, $websocket) {
+    console.log("cargando ComoFuncionaCtrl");
+    
+
+
+  }])
   .controller('RegistroCtrl', ['MarkerCreatorService', '$scope', 'CategoriaService','$http','filterFilter', function(MarkerCreatorService, $scope, categoriaService, $http, filterFilter) {
         $scope.categorias={};
         $scope.cat=[];
@@ -396,11 +402,23 @@ angular.module('myApp.controllers', [])
                 console.log("cargando posicion");
                 $scope.consulta.usuario.latitud=marker.coords.latitude;
                 $scope.consulta.usuario.longitud=marker.coords.longitude;
-
+                var image = {
+                  url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                  size: new google.maps.Size(20, 32),
+                  origin: new google.maps.Point(0, 0),
+                  anchor: new google.maps.Point(0, 32)
+                };
+              
+                var shape = {
+                  coords: [1, 1, 1, 20, 18, 20, 18, 1],
+                  type: 'poly'
+                };
+                marker.icon=image;
+                marker.shape = shape;
                 $scope.map.markers.push(marker);
                 $scope.addMarkerClickFunction($scope.map.markers);
                 refresh(marker);
-                //$scope.createConsulta();
+                $scope.createConsulta();
           
      });
 
@@ -419,11 +437,28 @@ angular.module('myApp.controllers', [])
     $scope.setMensajeProveedor=function(user, mensaje){
         var resultado = "";
         for (var i=0;i<$scope.map.markers.length;i++) {
-          console.log("agregando mensaje a proveedor: "+$scope.map.markers[i].usuario)
+          console.log("agregando mensaje a proveedor con imagen:  "+$scope.map.markers[i].usuario)
           if (user === $scope.map.markers[i].usuario) {
+              var image = {
+                url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                size: new google.maps.Size(20, 32),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(0, 32)
+              };
+            
+              var shape = {
+                coords: [1, 1, 1, 20, 18, 20, 18, 1],
+                type: 'poly'
+              };
               console.log("proveedor: "+$scope.map.markers[i].usuario)
               resultado = $scope.map.markers[i];
               $scope.map.markers[i].mensaje=mensaje;
+              $scope.map.markers[i].mensaje
+              $scope.map.markers[i].image=image;
+              $scope.map.markers[i].shape = shape;
+              $scope.map.markers[i].animation=google.maps.Animation.DROP;
+
+              
           }
         }
         return resultado;
@@ -485,10 +520,14 @@ angular.module('myApp.controllers', [])
         var url = 'https://ajustadoati.com:9000/ajustadoati/consulta/';
         var config = {headers: {'Content-Type': 'application/json; charset=UTF-8'}};
         console.log("guardando consulta !!"+$scope.consulta.categoria.nombre);
+        var latitud="";
+        var longitud="";
         $http.post(url, $scope.consulta, config).success(function (data) {
             console.log("Consulta Creada"+data);
             $scope.proveedores=data;
             men=$scope.consulta.producto.nombre;
+            latitud = $scope.consulta.usuario.latitud;
+            longitud = $scope.consulta.usuario.longitud;
             $scope.consulta={};
         }).error(function(data, status, headers, config) {
           console.log("error creando registro");
@@ -517,7 +556,7 @@ angular.module('myApp.controllers', [])
            //$scope.addMarkerClickFunction($scope.markers);
           console.log("resp"+resp);
           
-          var msg = '{"mensaje":"' + men + '", "users":"'+resp+'"}';
+          var msg = '{"mensaje":"' + men + '", "users":"'+resp+'", "latitud":"'+latitud+'", "longitud":"'+longitud+'"}';
           ws.send(msg); 
         });
       };
