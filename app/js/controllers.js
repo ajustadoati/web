@@ -26,7 +26,7 @@ angular.module('myApp.controllers', [])
 
 
   }])
-  .controller('RegistroCtrl', ['MarkerCreatorService', '$scope', 'CategoriaService','$http','filterFilter', function(MarkerCreatorService, $scope, categoriaService, $http, filterFilter) {
+  .controller('RegistroCtrl', ['MarkerCreatorService', '$scope', 'CategoriaService','$http','filterFilter', '$uibModal', function(MarkerCreatorService, $scope, categoriaService, $http, filterFilter, $uibModal) {
         $scope.categorias={};
         $scope.cat=[];
         $scope.proveedor={};
@@ -51,9 +51,11 @@ angular.module('myApp.controllers', [])
               $scope.cat.push(categoria);
 
              }
+
             
 
         });
+        $scope.cat.sort();
         //arreglo donde se almacenan las categorias seleccionadas 
         $scope.selection = [];
         //metodo que crea el proveedor
@@ -88,6 +90,7 @@ angular.module('myApp.controllers', [])
                 $http.post(url, $scope.proveedor, config)
                     .success(function (data) {
                         console.log("Proveedor Registrado");
+                        $scope.open('sm')
                         $scope.proveedor={};
                     })
                     .error(function(data, status, headers, config) {
@@ -168,7 +171,38 @@ angular.module('myApp.controllers', [])
             $scope.map.control.refresh({latitude: marker.coords.latitude,
                 longitude: marker.coords.longitude});
         }
+
+
+        //metodo que abre el popup de busqueda
+  $scope.open = function (size) {
+      
+      var modalInstance = $uibModal.open({
+          templateUrl: 'popupContent.html',
+          controller: 'ModalPopupCtrl',
+          size: size,
+          resolve: {
+            
+          }
+      });
+      
+      //envia los parametros de busqueda al controller del popup
+      modalInstance.result.then(function (selectedItem) {
+        
+      }, function () {
+        //se inicializa la consulta
+        
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+     
+  };
 }])
+
+.controller('ModalPopupCtrl', function ($scope, $modalInstance, $http){
+  console.log("cargando ctrl popup");
+  $scope.ok = function () {
+    $modalInstance.close();
+  };
+})
 // controller de prueba para map
 .controller('MapCtrl', ['MarkerCreatorService', '$scope', function (MarkerCreatorService, $scope) {
   console.log("cargando ctrl map");
@@ -306,8 +340,8 @@ angular.module('myApp.controllers', [])
   $scope.formConsulta={};
   // metodo para salir del modal
   $scope.ok = function () {
-    $scope.formConsulta.$setPristine();
-    $modalInstance.close($scope.selected.item);
+    $scope.formConsulta;
+    $modalInstance.close();
   };
   // metodo para salir del modal
   $scope.cancel = function () {
@@ -402,19 +436,13 @@ angular.module('myApp.controllers', [])
                 console.log("cargando posicion");
                 $scope.consulta.usuario.latitud=marker.coords.latitude;
                 $scope.consulta.usuario.longitud=marker.coords.longitude;
-                var image = {
-                  url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-                  size: new google.maps.Size(20, 32),
-                  origin: new google.maps.Point(0, 0),
-                  anchor: new google.maps.Point(0, 32)
+                
+                marker.options = {
+                  icon: 'img/home-2.png'
+                  
                 };
-              
-                var shape = {
-                  coords: [1, 1, 1, 20, 18, 20, 18, 1],
-                  type: 'poly'
-                };
-                marker.icon=image;
-                marker.shape = shape;
+                
+
                 $scope.map.markers.push(marker);
                 $scope.addMarkerClickFunction($scope.map.markers);
                 refresh(marker);
@@ -423,7 +451,7 @@ angular.module('myApp.controllers', [])
      });
 
     //se crea la conexion al websocket cuando carga el controller
-    var url="ws://ajustadoati.com:8080/ajustadoatiWS/openfire";
+    var url="wss://ajustadoati.com:8443/ajustadoatiWS/openfire";
     var ws = $websocket(url);
     //aqui se reciben las respuestas de los proveedores         
     ws.onMessage(function(message) {
@@ -439,23 +467,15 @@ angular.module('myApp.controllers', [])
         for (var i=0;i<$scope.map.markers.length;i++) {
           console.log("agregando mensaje a proveedor con imagen:  "+$scope.map.markers[i].usuario)
           if (user === $scope.map.markers[i].usuario) {
-              var image = {
-                url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-                size: new google.maps.Size(20, 32),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(0, 32)
-              };
-            
-              var shape = {
-                coords: [1, 1, 1, 20, 18, 20, 18, 1],
-                type: 'poly'
-              };
+              
               console.log("proveedor: "+$scope.map.markers[i].usuario)
               resultado = $scope.map.markers[i];
               $scope.map.markers[i].mensaje=mensaje;
               $scope.map.markers[i].mensaje
-              $scope.map.markers[i].image=image;
-              $scope.map.markers[i].shape = shape;
+              $scope.map.markers[i].options = {
+                  icon: 'img/smiley_happy.png'
+                  
+                };
               $scope.map.markers[i].animation=google.maps.Animation.DROP;
 
               
@@ -505,6 +525,10 @@ angular.module('myApp.controllers', [])
     $scope.addLocation= function(latitud, longitud, data){
       console.log("creando la location del proveedor");
       MarkerCreatorService.createByCoords(latitud, longitud, data, function (marker) {
+        marker.options = {
+                  icon: 'img/smiley.png'
+                  
+                };
         $scope.map.markers.push(marker);
         //$scope.addMarkerClick(marker);
             $scope.addMarkerClickFunction($scope.map.markers);

@@ -1086,7 +1086,7 @@ body {
   font-size: 14px;
   line-height: 1.42857143;
   color: #333;
-  background-color: #fff;
+  background-color: #fbfbfb;
 }
 input,
 button,
@@ -1097,7 +1097,7 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #337ab7;
+  color: #3ab54a;
   text-decoration: none;
 }
 a:hover,
@@ -3111,23 +3111,23 @@ fieldset[disabled] .btn-default.focus {
 }
 .btn-default .badge {
   color: #fff;
-  background-color: #333;
+  background-color: #58585a;
 }
 .btn-primary {
   color: #fff;
-  background-color: #337ab7;
-  border-color: #2e6da4;
+  background-color: #58585a;
+  border-color: #58585a;
 }
 .btn-primary:focus,
 .btn-primary.focus {
   color: #fff;
-  background-color: #286090;
-  border-color: #122b40;
+  background-color: #3ab54a;
+  border-color: #3ab54a;
 }
 .btn-primary:hover {
   color: #fff;
-  background-color: #286090;
-  border-color: #204d74;
+  background-color: #3ab54a;
+  border-color: #3ab54a;
 }
 .btn-primary:active,
 .btn-primary.active,
@@ -3163,8 +3163,8 @@ fieldset[disabled] .btn-primary:focus,
 .btn-primary.disabled.focus,
 .btn-primary[disabled].focus,
 fieldset[disabled] .btn-primary.focus {
-  background-color: #337ab7;
-  border-color: #2e6da4;
+  background-color: #3ab54a;
+  border-color: #58585a;
 }
 .btn-primary .badge {
   color: #337ab7;
@@ -4589,11 +4589,11 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   color: #ccc;
 }
 .navbar-inverse {
-  background-color: #222;
-  border-color: #080808;
+  background-color: #3ab54a;
+  border-color: #58585a;
 }
 .navbar-inverse .navbar-brand {
-  color: #9d9d9d;
+  color: #ffffff;
 }
 .navbar-inverse .navbar-brand:hover,
 .navbar-inverse .navbar-brand:focus {
@@ -4604,7 +4604,7 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   color: #9d9d9d;
 }
 .navbar-inverse .navbar-nav > li > a {
-  color: #9d9d9d;
+  color: #ffffff;
 }
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus {
@@ -5935,6 +5935,14 @@ button.close {
   padding: 15px;
   border-bottom: 1px solid #e5e5e5;
 }
+
+.modal-header-popup {
+  padding: 15px;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: #58585a;
+  color: white;
+
+}
 .modal-header .close {
   margin-top: -2px;
 }
@@ -5946,6 +5954,23 @@ button.close {
   height: 300px;
   position: relative;
   padding: 15px;
+}
+.modal-body-popup {
+  height: 300px;
+  position: relative;
+  padding: 15px;
+ 
+}
+.modal-popup {
+  height: 120px;
+  position: relative;
+  padding: 15px;
+
+}
+.modal-popup .label{
+  color:grey;
+  text-align: center;
+  align-content: center;
 }
 .modal-footer {
   padding: 15px;

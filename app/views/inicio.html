@@ -1,7 +1,7 @@
 <div class="row">
         	<div class="col-lg-12 text-center">
                 <br><br><br>
-                 <img src="/img/logo_green.png"></img>
+                 <img src="/img/logo.png"></img>
                 <br><br><br>
               
           </div>
@@ -25,7 +25,7 @@
                         <select ng-model="categoriaSelected" 
                           name="categoria"  
                           required 
-                          ng-options="categoria.nombre for categoria in cat" 
+                          ng-options="categoria.nombre for categoria in cat | orderBy: 'nombre'" 
                           class="selectpicker form-control" 
                           ng-change="changedValue(categoriaSelected)">
                           <option value="">-- Seleccione Categor&iacute;a --</option>
@@ -44,6 +44,7 @@
                        
                   </div>
             </form>
+           
     <script type="text/ng-template" id="myModalContent.html">
         <div class="modal-header">
             <h3 class="modal-title">Realizando B&uacute;squeda!</h3>
@@ -71,7 +72,8 @@
               <ui-gmap-markers 
                 models="map.markers" 
                 idkey="map.markers.id" 
-                coords="'coords'" 
+                coords="'coords'"
+                options="'options'" 
                 click="onClick" 
                 events="map.markers.events">
                 
@@ -81,14 +83,17 @@
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+            
         </div>
     </script>
 
     <div ng-show="selected">Selection from a modal: {{ selected }}</div>
 </div>
+
 </div>
+
 </div>
+ 
 
 	
              
