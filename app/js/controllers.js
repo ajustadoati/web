@@ -336,6 +336,7 @@ angular.module('myApp.controllers', [])
   $scope.proveedores={}
   $scope.consulta.usuario.longitud="";
   $scope.consulta.usuario.latitud="";
+  $scope.consultaId="";
 
   $scope.formConsulta={};
   // metodo para salir del modal
@@ -542,13 +543,23 @@ angular.module('myApp.controllers', [])
         $scope.consulta.producto.descripcion=$scope.consulta.producto.nombre;
         $scope.consulta.producto.id=0;    
         var url = 'https://ajustadoati.com:9000/ajustadoati/consulta/';
+        var urlProveedores = 'https://ajustadoati.com:9000/ajustadoati/proveedor/categoria/'+$scope.consulta.categoria.nombre;
         var config = {headers: {'Content-Type': 'application/json; charset=UTF-8'}};
         console.log("guardando consulta !!"+$scope.consulta.categoria.nombre);
         var latitud="";
         var longitud="";
-        $http.post(url, $scope.consulta, config).success(function (data) {
-            console.log("Consulta Creada"+data);
+
+        $http.get(urlProveedores, config).success(function (data) {
+            console.log("Proveedores"+data);
             $scope.proveedores=data;
+            
+        }).error(function(data, status, headers, config) {
+          console.log("error buscando proveedores");
+          $scope.consulta={};
+        });
+        $http.post(url, $scope.consulta, config).success(function (data) {
+            console.log("Consulta Creada"+data.id);
+            $scope.consultaId=data.id;
             men=$scope.consulta.producto.nombre;
             latitud = $scope.consulta.usuario.latitud;
             longitud = $scope.consulta.usuario.longitud;
@@ -580,7 +591,7 @@ angular.module('myApp.controllers', [])
            //$scope.addMarkerClickFunction($scope.markers);
           console.log("resp"+resp);
           
-          var msg = '{"mensaje":"' + men + '", "users":"'+resp+'", "latitud":"'+latitud+'", "longitud":"'+longitud+'"}';
+          var msg = '{"id":'+$scope.consultaId+',"mensaje":"' + men + '", "users":"'+resp+'", "latitud":"'+latitud+'", "longitud":"'+longitud+'"}';
           ws.send(msg); 
         });
       };
