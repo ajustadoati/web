@@ -51,9 +51,6 @@ angular.module('myApp.controllers', [])
               $scope.cat.push(categoria);
 
              }
-
-            
-
         });
         $scope.cat.sort();
         //arreglo donde se almacenan las categorias seleccionadas 
@@ -281,7 +278,7 @@ angular.module('myApp.controllers', [])
   //metodo que toma el valor de la categoria seleccionada
   $scope.changedValue = function(categoria) {
     if(categoria){
-      console.log("categoria in modalctrl: "+categoria.nombre);
+      console.log("categoria in modalctrl modified: "+categoria.nombre);
       $scope.consulta.categoria.nombre=categoria.nombre;
       $scope.consulta.categoria.descripcion=categoria.descripcion; 
     }
@@ -320,7 +317,7 @@ angular.module('myApp.controllers', [])
 })
 
 //controller del modal
-.controller('ModalInstanceCtrl', function ($scope, $modalInstance, MarkerCreatorService, consulta, $websocket, $http, uiGmapIsReady, uiGmapGoogleMapApi
+.controller('ModalInstanceCtrl', function ($scope, $modalInstance, MarkerCreatorService, consulta, $websocket, $http, uiGmapIsReady, uiGmapGoogleMapApi, GooglePlacesService
   ) {
 
   $scope.consulta=consulta;
@@ -443,10 +440,55 @@ angular.module('myApp.controllers', [])
                   
                 };
                 
-
                 $scope.map.markers.push(marker);
                 $scope.addMarkerClickFunction($scope.map.markers);
                 refresh(marker);
+
+                var latLng = new google.maps.LatLng($scope.consulta.usuario.latitud, $scope.consulta.usuario.longitud);
+                var mapOptions = {
+                  center: latLng,
+                  zoom: 10,
+                  noClear: true,
+                  mapTypeId: google.maps.MapTypeId.ROADMAP,
+                  disableDefaultUI: true
+                };     
+                $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+                var icon = {
+                    url: "img/icon_green.png", // url
+                    scaledSize: new google.maps.Size(30, 30), // scaled size
+                    origin: new google.maps.Point(0,0), // origin
+                    anchor: new google.maps.Point(0, 0) // anchor
+                };
+
+                GooglePlacesService.getPlacesNearby(latLng,$scope.consulta.categoria.descripcion)
+                .then(function(nearby_places){
+                  // Clean map
+                  //cleanMap();
+
+                  var bound = new google.maps.LatLngBounds(),
+                        places_markers = [];
+
+                    for (var i = 0; i < nearby_places.length; i++) {
+                      bound.extend(nearby_places[i].geometry.location);
+                      var place_marker = createMarker(nearby_places[i]);
+                      places_markers.push(place_marker);
+                      $scope.markers.push(place_marker);
+                    }
+
+                    // Create cluster with places
+                    createCluster(places_markers);
+
+                    var neraby_places_bound_center = bound.getCenter();
+
+                    // Center map based on the bound arround nearby places
+                    $scope.latitude = neraby_places_bound_center.lat();
+                    $scope.longitude = neraby_places_bound_center.lng();
+
+                    // To fit map with places
+                    $scope.map.fitBounds(bound);
+
+                  
+                });
                 $scope.createConsulta();
           
      });
