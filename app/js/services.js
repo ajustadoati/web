@@ -116,20 +116,20 @@ angular.module('myApp.services', []).
 
       var dataFactory =[];
       return {
-                            dataFactory: dataFactory,
-                            status: function () {
-                                return ws.readyState;
-                            },
-                            send: function (message) {
-                              console.log("mensaje"+message);
-                                if (angular.isString(message)) {
-                                    ws.send(message);
-                                }
-                                else if (angular.isObject(message)) {
-                                    ws.send(JSON.stringify(message));
-                                }
-                            }
-                        };
+          dataFactory: dataFactory,
+          status: function () {
+              return ws.readyState;
+          },
+          send: function (message) {
+            console.log("mensaje"+message);
+              if (angular.isString(message)) {
+                  ws.send(message);
+              }
+              else if (angular.isObject(message)) {
+                  ws.send(JSON.stringify(message));
+              }
+          }
+      };
 
       
     }).
@@ -138,7 +138,7 @@ angular.module('myApp.services', []).
     var markerId = 0;
 
     function create(latitude, longitude, data) {
-        console.log("creando ubicacion desde el MOdal");
+        console.log("creando ubicacion");
         var marker = {
             coords: {
                 latitude: latitude,
@@ -151,6 +151,7 @@ angular.module('myApp.services', []).
             usuario:data.usuario,
             id: ++markerId          
         };
+        
         return marker;        
     }
 
@@ -209,15 +210,17 @@ angular.module('myApp.services', []).
     }
 
     function createByCurrentLocation(successCallback) {
+      console.log("adding current location");
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
                 var usuario = {
                     mensaje:"mensaje",
-                    nombre:"usuario-ajustado",
+                    nombre:"Usted",
                     telefono:"telefono",
                     usuario:"usuario-ajustado",
                     id: "dataid"          
                 };
+                
                 var marker = create(position.coords.latitude, position.coords.longitude, usuario);
                 invokeSuccessCallback(successCallback, marker);
             });
@@ -278,47 +281,27 @@ angular.module('myApp.services', []).
     },
 
     getPlacesNearby : function(location,categoria){
-        console.log("category ============:"+categoria)
-        // As we are already using a map, we don't need to pass the map element to the PlacesServices (https://groups.google.com/forum/#!topic/google-maps-js-api-v3/QJ67k-ATuFg)
-        var dfd = $q.defer(),
-                elem = document.createElement("div"),
-            service = new google.maps.places.PlacesService(elem);
+          console.log("category ============:"+categoria)
+          // As we are already using a map, we don't need to pass the map element to the PlacesServices (https://groups.google.com/forum/#!topic/google-maps-js-api-v3/QJ67k-ATuFg)
+          var dfd = $q.defer(),
+                  elem = document.createElement("div"),
+              service = new google.maps.places.PlacesService(elem);
 
-        service.nearbySearch({
-        location: location,
-        radius: '1000',
-        types: [categoria]
-      }, function(results, status){
-            if (status != google.maps.places.PlacesServiceStatus.OK) {
-            dfd.resolve([]);
-          }
-            else {
-                dfd.resolve(results);
+          service.nearbySearch({
+          location: location,
+          radius: '500',
+          types: [categoria]
+        }, function(results, status){
+              if (status != google.maps.places.PlacesServiceStatus.OK) {
+              dfd.resolve([]);
             }
-        });
+              else {
+                  dfd.resolve(results);
+              }
+          });
 
-    return dfd.promise;
-  },
-
-    getPlaceDetails : function(placeId){
-        // As we are already using a map, we don't need to pass the map element to the PlacesServices (https://groups.google.com/forum/#!topic/google-maps-js-api-v3/QJ67k-ATuFg)
-        var dfd = $q.defer(),
-                elem = document.createElement("div"),
-            service = new google.maps.places.PlacesService(elem);
-
-        service.getDetails({
-        placeId: placeId
-      }, function(place, status){
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
-            dfd.resolve(place);
-          }
-            else {
-                dfd.resolve(null);
-            }
-        });
-
-    return dfd.promise;
-  }
+      return dfd.promise;
+    }
 
     
   };

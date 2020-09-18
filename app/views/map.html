@@ -1,10 +1,39 @@
-
 <div>
     <div class="map_container" >
-            <google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options" control="map.control">
-                <markers models="map.markers" coords="'self'" options="'options'" isLabel='true'>
-                </markers>
-            </google-map>
+            
+            
+
+            <ui-gmap-google-map 
+                    id="map"
+                    center="map.center" 
+                    zoom="map.zoom" 
+                    draggable="true" 
+                    options="map.options" 
+                    events="map.events" 
+                    control="map.control">
+       
+              <ui-gmap-window 
+                coords="MapOptions.markers.selected.coords" 
+                show="windowOptions.show" 
+                templateUrl="'infowindow.tpl'" 
+                templateParameter="MapOptions.markers.selected"  
+                options="windowOptions" 
+                closeClick="closeClick()" 
+                ng-cloak>
+                    <div>Hello</div>
+              </ui-gmap-window>
+              <ui-gmap-markers 
+                models="map.markers" 
+                idkey="map.markers.id" 
+                coords="'coords'"
+                options="'options'" 
+                type="cluster" 
+                typeOptions="map.options.cluster"
+                click="onClick" 
+                events="map.markers.events">
+                
+              </ui-gmap-markers>
+        </ui-gmap-google-map>
         </div>  
         <div class="controls">
             <h3>Current location</h3>

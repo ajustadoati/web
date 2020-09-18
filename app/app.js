@@ -27,8 +27,8 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 }])
 .config(function (uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
-        key: 'AIzaSyBYY_9J-8K3HD0GNA9UMKkNkCtJ7Zg-qOI',
+        key: 'AIzaSyDt4Y3LBIPNE5HxvW6nWnC7J7rcchI-vOc',
         v: '3',
-        libraries: 'weather,geometry,visualization,places'
+        libraries: 'weather,geometry,visualization'
     });
 });

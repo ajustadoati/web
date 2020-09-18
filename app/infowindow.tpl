@@ -1,55 +1,18 @@
-<div ng-controller="templateController">
-		<div class="row">
-	      	<div class="col-xs-12 col-sm-12">
-	            <div class="row">
-	                <div class="col-xs-4 col-sm-4">
-	                    Nombre:
-	                </div>
-	                <div class="col-xs-4 col-sm-8">
-	                    {{parameter.nombre}}
-	                </div>
-	          	</div>
-	         </div>
+<div ng-controller="templateController" width="155px">
+	<div>
+	  	<div>
+	      
+	        <b>{{parameter.nombre}}</b>
+	            
+	      	
 	     </div>
-	     <div class="row">
-	         <div class="col-xs-12 col-sm-12">        
-	            
-	            <div class="row">
-	                <div class="col-xs-4 col-sm-4">
-	                    Usuario:
-	                </div>
-	                <div class="col-xs-4 col-sm-8">
-	                    {{parameter.usuario}}
-	                </div>
-	             </div>
-	          </div> 
-	      </div>
-	     <div class="row">
-	           <div class="col-xs-12 col-sm-20">  
-	            
-	             <div class="row">
-		                <div class="col-xs-4 col-sm-4">
-		                    Telefono:
-		                </div>
-		                <div class="col-xs-4 col-sm-8">
-		                    {{parameter.telefono}}
-		                </div>
-		                
-		                
-		            </div>
-	            </div>
+	     
+	       <div>
+	       	Telefono: {{parameter.telefono}}
 	       </div>
-	     <div class="row">
-	            <div class="col-xs-12 col-sm-12">  
-		             <div class="row">
-		                <div class="col-xs-4 col-sm-4">
-		                    Mensaje:
-		                </div>
-		                <div class="col-xs-4 col-sm-8">
-		                    {{parameter.mensaje}}
-		                </div>
-		                
-		            </div>
-	            </div>
-	        </div>
+	       
+		       <div >Enviar Whatsapp <a href="https://api.whatsapp.com/send?phone='+{{parameter.telefono}}+'&text=Hola%20desde%20ajustadoati" target="_blank"><img src="img/icon_message.png" width="25" height="25"/></a>
+		       </div>
+	   	 </div>
+	 
 </div>
