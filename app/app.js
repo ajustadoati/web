@@ -27,7 +27,7 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 }])
 .config(function (uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
-        key: 'AIzaSyDt4Y3LBIPNE5HxvW6nWnC7J7rcchI-vOc',
+        key: 'xxxxxxx',
         v: '3',
         libraries: 'weather,geometry,visualization'
     });
