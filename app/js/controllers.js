@@ -702,7 +702,7 @@ angular.module('myApp.controllers', [])
       console.log("receiving"+message.data);
       var obj = JSON.parse(message.data);
       console.log("receiving from: "+obj.latitud);
-      console.log("message: "+obj.longitud);
+      console.log("message: "+obj.message);
       $scope.setMensajeProveedor(obj.user, obj.message);
     });
     //metodo que agrega el mensaje en el objeto proveedor cuando responde
@@ -716,7 +716,7 @@ angular.module('myApp.controllers', [])
               $scope.map.markers[i].mensaje=mensaje;
               $scope.map.markers[i].mensaje
               $scope.map.markers[i].options = {
-                icon: 'img/smiley_happy.png'
+                icon: 'img/home-2.png'
               };
               $scope.map.markers[i].animation=google.maps.Animation.DROP;
           }
